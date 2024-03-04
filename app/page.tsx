@@ -59,16 +59,28 @@ export default function Home() {
     setShowDeleteModal(true);
   };
 
-  const resetEventDateColors = (start: Date, end: Date) => {
+  const handleResettEventDateColors = (start: Date, end: Date) => {
     let currentDate = new Date(start);
+    let endDate = new Date(end);
+
+    const today = new Date();
     while (currentDate <= end) {
       const dateStr = `${currentDate.getFullYear()}-${String(
         currentDate.getMonth() + 1
       ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
       const dayEl = document.querySelector(`.fc-day[data-date="${dateStr}"]`);
       if (dayEl && dayEl instanceof HTMLElement) {
-        dayEl.style.backgroundColor = ""; 
+        dayEl.style.backgroundColor = "";
       }
+      const currentEl = document.querySelector(
+        `.fc-day-today .fc-daygrid-day-frame`
+      );
+      if (today >= currentDate && today <= endDate) {
+        if (currentEl && currentEl instanceof HTMLElement) {
+          currentEl.style.backgroundColor = "";
+        }
+      }
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
   };
@@ -78,7 +90,7 @@ export default function Home() {
     dispatch(actionDeleteEvents(id));
     const startDate = new Date(eventToDelete.start as string);
     const endDate = new Date(eventToDelete.end as string);
-    resetEventDateColors(startDate, endDate);
+    handleResettEventDateColors(startDate, endDate);
 
     setShowDeleteModal(false);
   };

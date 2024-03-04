@@ -55,6 +55,52 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
     setTooltipInfo((prev) => ({ ...prev, show: false }));
   };
 
+  const handleSetEventDateColors = (start: Date, end: Date, color: string) => {
+    let startDate = start ? new Date(start) : new Date();
+
+    let endDate = end ? new Date(end) : new Date(startDate);
+
+    if (endDate < startDate) {
+      endDate = new Date(startDate);
+    }
+
+    startDate = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    endDate = new Date(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+    let today = new Date();
+
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    let currentDate = new Date(startDate);
+    while (currentDate < endDate) {
+      const dateStr = `${currentDate.getFullYear()}-${String(
+        currentDate.getMonth() + 1
+      ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
+      const dayEl = document.querySelector(`.fc-day[data-date="${dateStr}"]`);
+
+      const currentEl = document.querySelector(
+        `.fc-day-today .fc-daygrid-day-frame`
+      );
+      if (dayEl && dayEl instanceof HTMLElement) {
+        dayEl.style.backgroundColor = "#c9ffcf";
+      }
+      if (today >= currentDate && today <= endDate) {
+        if (currentEl && currentEl instanceof HTMLElement) {
+          currentEl.style.backgroundColor = "#c9ffcf";
+        }
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  };
+
   const calendarRef = useRef<FullCalendar>(null);
   const { width } = useWindowSize();
 
@@ -81,7 +127,6 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
   return (
     <div className="bg-white text-black">
       <StyleWrapper>
-        
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
@@ -97,9 +142,7 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
           dateClick={(data) => {
             !isMobile && onDateClick(data);
           }}
-          drop={(data) => {
-           
-          }}
+          drop={(data) => {}}
           eventClick={(data) => {
             onEventClick(data);
           }}
@@ -110,58 +153,11 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
           eventMouseEnter={handleEventMouseEnter}
           eventMouseLeave={handleEventMouseLeave}
           eventDidMount={({ isMirror, isStart, isEnd, event, el }) => {
-            let startDate = event.start ? new Date(event.start) : new Date();
-
-            let endDate = event.end ? new Date(event.end) : new Date(startDate);
-
-            if (endDate < startDate) {
-              endDate = new Date(startDate);
-            }
-
-            startDate = new Date(
-              startDate.getFullYear(),
-              startDate.getMonth(),
-              startDate.getDate()
+            handleSetEventDateColors(
+              event.start as Date,
+              event.end as Date,
+              "#c9ffcf"
             );
-            endDate = new Date(
-              endDate.getFullYear(),
-              endDate.getMonth(),
-              endDate.getDate()
-            );
-            let today = new Date();
-
-            today = new Date(
-              today.getFullYear(),
-              today.getMonth(),
-              today.getDate()
-            );
-
-            let currentDate = new Date(startDate);
-            while (currentDate < endDate) {
-              const dateStr = `${currentDate.getFullYear()}-${String(
-                currentDate.getMonth() + 1
-              ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(
-                2,
-                "0"
-              )}`;
-              const dayEl = document.querySelector(
-                `.fc-day[data-date="${dateStr}"]`
-              );
-
-              const currentEl = document.querySelector(
-                `.fc-day-today .fc-daygrid-day-frame`
-              );
-              if (dayEl && dayEl instanceof HTMLElement) {
-                dayEl.style.backgroundColor = "#c9ffcf";
-              }
-              if (today >= currentDate && today <= endDate) {
-                if (currentEl && currentEl instanceof HTMLElement) {
-                  currentEl.style.backgroundColor = "#c9ffcf";
-                }
-              }
-
-              currentDate.setDate(currentDate.getDate() + 1);
-            }
           }}
         />
       </StyleWrapper>
