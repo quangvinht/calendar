@@ -128,11 +128,11 @@ export const StyleWrapper = styled.div`
       display: none !important;
     }
     .fc .fc-daygrid-day {
-      border: none !important; // Ẩn đường viền của ngày
+      border: none !important; 
     }
 
     .fc .fc-col-header-cell {
-      border: none !important; // Ẩn đường viền của header column
+      border: none !important; 
     }
   }
 `;

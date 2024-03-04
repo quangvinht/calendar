@@ -81,6 +81,7 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
   return (
     <div className="bg-white text-black">
       <StyleWrapper>
+        
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
@@ -97,7 +98,7 @@ function Calendar({ events, onDateClick, onEventClick, onSelect }: Props) {
             !isMobile && onDateClick(data);
           }}
           drop={(data) => {
-            // console.log("drop:", data);
+           
           }}
           eventClick={(data) => {
             onEventClick(data);

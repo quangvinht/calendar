@@ -6,9 +6,9 @@ import { actionAddEvents } from "@/app/common/actions/eventAction";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
-  showState: boolean; //showModal
-  onClose: Function; // setShowModal
-  onCancel: Function; // handleShowModal
+  showState: boolean;
+  onClose: Function; 
+  onCancel: Function; 
 
   onSetModal: Function;
 

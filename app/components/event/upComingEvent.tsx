@@ -45,7 +45,10 @@ function UpComingEvent({ events }: Props) {
           </div>
 
           {displayedEvents.map((event: Event) => (
-            <EventItem key={event.id} event={event} />
+            <div key={event.id} className="m-2">
+              {" "}
+              <EventItem event={event} />
+            </div>
           ))}
         </div>
       </div>
