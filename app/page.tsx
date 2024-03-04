@@ -55,13 +55,31 @@ export default function Home() {
   };
 
   const handleGetIdCurrentEvent = (data: { event: { id: string } }) => {
-    console.log(data);
     setIdCurrentEvent(Number(data.event.id));
     setShowDeleteModal(true);
   };
 
+  const resetEventDateColors = (start: Date, end: Date) => {
+    let currentDate = new Date(start);
+    while (currentDate <= end) {
+      const dateStr = `${currentDate.getFullYear()}-${String(
+        currentDate.getMonth() + 1
+      ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
+      const dayEl = document.querySelector(`.fc-day[data-date="${dateStr}"]`);
+      if (dayEl && dayEl instanceof HTMLElement) {
+        dayEl.style.backgroundColor = ""; // Reset màu sắc về mặc định
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  };
+
   const handleDeleteEvent = (id: number) => {
+    const eventToDelete = events.find((event: Event) => event.id === id);
     dispatch(actionDeleteEvents(id));
+    const startDate = new Date(eventToDelete.start as string);
+    const endDate = new Date(eventToDelete.end as string);
+    resetEventDateColors(startDate, endDate);
+
     setShowDeleteModal(false);
   };
 
