@@ -11,9 +11,9 @@ type Props = {
 };
 
 function UpComingEvent({ events }: Props) {
+  const { width } = useWindowSize();
   const [showAll, setShowAll] = useState<boolean>(false);
 
-  const { width } = useWindowSize();
   const isMobile = width < 768;
   const displayedEvents = showAll ? events : events.slice(0, 3);
   const todayFormatted = getFormatCurrentDate();

@@ -1,6 +1,7 @@
 import { EventType, Event } from "@/app/models/event";
 import { formatTime } from "@/app/ultis";
 import VideoCameraIcon from "@heroicons/react/20/solid/VideoCameraIcon";
+import Image from "next/image";
 
 import React from "react";
 
@@ -77,12 +78,17 @@ function EventItem({ event }: Props) {
 
         {event.type !== EventType.EVENT && (
           <div className=" flex items-center ">
-            <img
+            <Image
               src={imgUrl}
-              className="object-cover object-center rounded-full w-8 h-8"
+              alt="Picture of the author"
+              width={`32`}
+              height={`36`}
+              loading="lazy"
+              className=" rounded-full "
+              objectFit="cover"
+              objectPosition="center"
             />
             <a href="#" className="ml-2 text-gray-500 underline">
-              {" "}
               View Client Profile
             </a>
           </div>

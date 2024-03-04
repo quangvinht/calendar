@@ -13,8 +13,9 @@ interface TooltipProps {
 }
 
 function Tooltip({ content, show, x, y }: TooltipProps) {
-  if (!show || !content) return null;
   const { width } = useWindowSize();
+
+  if (!show || !content) return null;
 
   const isMobile = width < 768;
   const event: Event = {
