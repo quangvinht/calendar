@@ -67,7 +67,7 @@ export default function Home() {
       ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
       const dayEl = document.querySelector(`.fc-day[data-date="${dateStr}"]`);
       if (dayEl && dayEl instanceof HTMLElement) {
-        dayEl.style.backgroundColor = ""; // Reset màu sắc về mặc định
+        dayEl.style.backgroundColor = ""; 
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
